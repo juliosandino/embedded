@@ -17,40 +17,7 @@
  */
 
 #include <stdint.h>
-
-#if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
-#endif
-
-// GPIO memory structure definition
-typedef struct
-{
-	volatile uint32_t MODER;	/* offset: 0x00	*/
-	volatile uint32_t OTYPER;	/* offset: 0x04	*/
-	volatile uint32_t OSPEEDR;	/* offset: 0x08 */
-	volatile uint32_t PUPDR;	/* offset: 0x0C */
-	volatile uint32_t IDR;		/* offset: 0x10 */
-	volatile uint32_t ODR;		/* offset: 0x14 */
-	volatile uint32_t BSRR;		/* offset: 0x18 */
-	volatile uint32_t LCKR;		/* offset: 0x1C */
-	volatile uint32_t AFRL;		/* offset: 0x20 */
-	volatile uint32_t AFRH;		/* offset: 0x24 */
-} GPIO_TypeDef;
-
-// RCC memory structure definition
-typedef struct
-{
-	volatile uint32_t DUMMY[12];
-	volatile uint32_t AHB1ENR;	/* offset: 0x30 */
-} RCC_TypeDef;
-
-// Base Address Definitions
-#define 	RCC_BASE 	0x40023800
-#define		GPIOA_BASE	0X40020000
-
-// Peripheral pointer definitions
-#define RCC		((RCC_TypeDef*) RCC_BASE)
-#define GPIOA	((GPIO_TypeDef*) GPIOA_BASE)
+#include "stm32f4xx.h"
 
 // 14: Bit mask for enabling GPIOIA (bit 0)
 #define GPIOAEN			(1U << 0)
