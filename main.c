@@ -22,32 +22,36 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-// 1: Define base address for peripherals
-#define PERIPH_BASE			(0x40000000UL)
-// 2: Offset for AHB1 peripheral bus
-#define AHB1PERIPH_OFFSET	(0x00020000UL)
-// 3: Base address for AHB1 peripherals
-#define AHB1PERIPH_BASE		(PERIPH_BASE + AHB1PERIPH_OFFSET)
-// 4: Offset for GPIOA
-#define GPIOA_OFFSET		(0x0UL)
-// 5: Base address for GPIOA
-#define GPIOA_BASE			(AHB1PERIPH_BASE + GPIOA_OFFSET)
-// 6: Offset for RCC
-#define RCC_OFFSET			(0x3800UL)
-// 7: Base address for RCC
-#define RCC_BASE			(AHB1PERIPH_BASE + RCC_OFFSET)
-// 8: Offset for AHB1EN register
-#define AHB1EN_R_OFFSET		(0x30UL)
-// 9: Address of AHB1EN register
-#define RCC_AHB1EN_R 	(*(volatile unsigned int*) (RCC_BASE + AHB1EN_R_OFFSET))
-// 10: Offset for mode register
-#define MODE_R_OFFSET		(0x00UL)
-// 11: Address of GPIOA mode register
-#define GPIOA_MODE_R 	(*(volatile unsigned int*) (GPIOA_BASE + MODE_R_OFFSET))
-// 12: Offset for output data register
-#define OD_R_OFFSET			(0x14UL)
-// 13: Address of GPIOA output data register
-#define GPIOA_OD_R		(*(volatile unsigned int*) (GPIOA_BASE + OD_R_OFFSET))
+// GPIO memory structure definition
+typedef struct
+{
+	volatile uint32_t MODER;	/* offset: 0x00	*/
+	volatile uint32_t OTYPER;	/* offset: 0x04	*/
+	volatile uint32_t OSPEEDR;	/* offset: 0x08 */
+	volatile uint32_t PUPDR;	/* offset: 0x0C */
+	volatile uint32_t IDR;		/* offset: 0x10 */
+	volatile uint32_t ODR;		/* offset: 0x14 */
+	volatile uint32_t BSRR;		/* offset: 0x18 */
+	volatile uint32_t LCKR;		/* offset: 0x1C */
+	volatile uint32_t AFRL;		/* offset: 0x20 */
+	volatile uint32_t AFRH;		/* offset: 0x24 */
+} GPIO_TypeDef;
+
+// RCC memory structure definition
+typedef struct
+{
+	volatile uint32_t DUMMY[12];
+	volatile uint32_t AHB1ENR;	/* offset: 0x30 */
+} RCC_TypeDef;
+
+// Base Address Definitions
+#define 	RCC_BASE 	0x40023800
+#define		GPIOA_BASE	0X40020000
+
+// Peripheral pointer definitions
+#define RCC		((RCC_TypeDef*) RCC_BASE)
+#define GPIOA	((GPIO_TypeDef*) GPIOA_BASE)
+
 // 14: Bit mask for enabling GPIOIA (bit 0)
 #define GPIOAEN			(1U << 0)
 // 15: Bit mask for GPIOA pin 5
@@ -58,18 +62,18 @@
 int main(void)
 {
 	// Enable the clock access for GPIOA
-	RCC_AHB1EN_R |= GPIOAEN;
+	RCC->AHB1ENR |= GPIOAEN;
 
 	// Configure pin PA5 as output pin
 	// set bit 10 as 1
 	// set bit 11 as 0
-	GPIOA_MODE_R |= (1U << 10);
-	GPIOA_MODE_R &= ~(1U << 11);
+	GPIOA->MODER |= (1U << 10);
+	GPIOA->MODER &= ~(1U << 11);
 
 	while (1) {
 		// set output high for PA5
 		// Using XOR operator to toggle off and on, and make it blink.
-		GPIOA_OD_R ^= LED_PIN;
+		GPIOA->ODR ^= LED_PIN;
 		
 		for (int i = 0; i < 2000000 ; i++) {
 			;
