@@ -5,8 +5,8 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "cwd": "${workspaceRoot}/testground",
-            "executable": "${workspaceRoot}/testground/linker_startup_test.elf",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/app.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",
