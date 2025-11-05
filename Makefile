@@ -3,10 +3,12 @@
 # Output ELF file
 TARGET := app.elf
 MAP_FILE := app.map
+CMSIS_DEVICE_INCLUDE_DIR := chip_headers/CMSIS/DEVICE/ST/STM32F4xx/Include
+CMSIS_STANDARD_INCLUDE_DIR := chip_headers/CMSIS/IN
 
 # Compiler and flags
 CC := arm-none-eabi-gcc
-CFLAGS := -c -g -mcpu=cortex-m4 -mthumb -Wall -std=gnu11
+CFLAGS := -c -g -mcpu=cortex-m4 -mthumb -Wall -std=gnu11 -I$(CMSIS_DEVICE_INCLUDE_DIR) -I$(CMSIS_STANDARD_INCLUDE_DIR)
 LDFLAGS := -nostdlib -T stm32_ls.ld -Wl,-Map=$(MAP_FILE)
 
 # Source and object files
@@ -24,7 +26,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	rm -f $(OBJS) $(TARGET)
