@@ -13,12 +13,16 @@
             "servertype": "openocd",
             "configFiles": ["board/st_nucleo_f4.cfg"],
             "searchDir": [],
-            "runToEntryPoint": "main",
+            // "runToEntryPoint": "main",
             "showDevDebugOutput": "none",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 4
             },
+            "preLaunchCommands": [
+                "make clean",
+                "make all"
+            ],
         }
     ]
 }
