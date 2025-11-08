@@ -9,12 +9,12 @@ DEFINE := -DDEBUG -DNUCLEO_F411RE -DSTM32 -DSTM32F4 -DSTM32F411RETx -DSTM32F411x
 
 # Compiler and flags
 CC := arm-none-eabi-gcc
-CFLAGS := -c -g -mcpu=cortex-m4 -mthumb -Wall -std=gnu11 -I$(CMSIS_DEVICE_INCLUDE_DIR) -I$(CMSIS_STANDARD_INCLUDE_DIR) $(DEFINE)
+CFLAGS := -c -g -mcpu=cortex-m4 -mthumb -Wall -std=gnu11 -I$(CMSIS_DEVICE_INCLUDE_DIR) -I$(CMSIS_STANDARD_INCLUDE_DIR) -Iinclude $(DEFINE)
 LDFLAGS := -nostdlib -T stm32_ls.ld -Wl,-Map=$(MAP_FILE)
 
 # Source and object files
-SRCS := $(wildcard *.c)
-OBJS := $(SRCS:.c=.o)
+SRCS := $(wildcard src/*.c)
+OBJS := $(patsubst %.c,%.o,$(SRCS))
 
 # Output ELF file
 TARGET := app.elf

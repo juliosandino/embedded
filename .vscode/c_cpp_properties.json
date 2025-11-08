@@ -19,7 +19,8 @@
             ],
             "includePath": [
                 "chip_headers/CMSIS/Device/ST/STM32F4xx/Include",
-                "chip_headers/CMSIS/Include"
+                "chip_headers/CMSIS/Include",
+                "include"
             ],
             "configurationProvider": "ms-vscode.makefile-tools"
         }
