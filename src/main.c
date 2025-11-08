@@ -28,17 +28,20 @@ int main(void)
 	timer_demo();
 }
 
-void timer_demo(void) {
+void timer_demo(void)
+{
 	// Program initialization
 	led_init();
 
-	while (1) {
+	while (1)
+	{
 		led_toggle();
 		systick_msec_delay(100);
 	}
 }
 
-void button_led_demo(void) {
+void button_led_demo(void)
+{
 	// Program initialization
 	led_init();
 	button_init();
@@ -46,16 +49,19 @@ void button_led_demo(void) {
 	bool is_led_on = false;
 	bool button_pressed;
 
-	while (1) {
+	while (1)
+	{
 		// Get the button state
 		button_pressed = get_button_state();
 
-		if (button_pressed && !is_led_on) {
+		if (button_pressed && !is_led_on)
+		{
 			led_on();
 			is_led_on = true;
 		}
-		
-		if (!button_pressed && is_led_on) {
+
+		if (!button_pressed && is_led_on)
+		{
 			led_off();
 			is_led_on = false;
 		}

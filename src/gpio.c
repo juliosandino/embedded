@@ -1,14 +1,14 @@
 #include "gpio.h"
 
 // LED
-#define GPIOAEN     (1U<<0)
-#define LED_PIN     (1U<<5)
-#define LED_BS5     (1U<<5)     /* Bit Set Pin 5*/
-#define LED_BR5     (1U<<21)    /* Bit Reset Pin 5*/
+#define GPIOAEN (1U << 0)
+#define LED_PIN (1U << 5)
+#define LED_BS5 (1U << 5)  /* Bit Set Pin 5*/
+#define LED_BR5 (1U << 21) /* Bit Reset Pin 5*/
 
 // BUTTON
-#define GPIOCEN     (1U<<2)
-#define BTN_PIN     (1U<<13)
+#define GPIOCEN (1U << 2)
+#define BTN_PIN (1U << 13)
 
 /* ONBOARD LED FUNCTIONALITY */
 
@@ -19,7 +19,7 @@ void led_init(void)
 
     /* Set PA5 mode as output mode */
     GPIOA->MODER |= (1U << 10);
-	GPIOA->MODER &= ~(1U << 11);
+    GPIOA->MODER &= ~(1U << 11);
 }
 
 void led_on(void)
@@ -46,14 +46,15 @@ void button_init(void)
 
     /* Set PC13 mode as input mode */
     GPIOC->MODER &= (0U << 26);
-	GPIOC->MODER &= (0U << 27);
+    GPIOC->MODER &= (0U << 27);
 }
 
 // Note: BTN is active low
 //       So if it's pressed, then it is 0 (low)
 bool get_button_state(void)
 {
-    if (GPIOC->IDR & BTN_PIN) {
+    if (GPIOC->IDR & BTN_PIN)
+    {
         return false;
     }
 
