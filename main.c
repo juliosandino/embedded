@@ -18,15 +18,27 @@
 
 #include <stdint.h>
 #include "gpio.h"
+#include "systick.h"
 
-void wait(uint32_t n) {
-	for (int i = 0; i < n ; i++) {
-		;
-	}
-}
+void timer_demo();
+void button_led_demo();
 
 int main(void)
 {
+	timer_demo();
+}
+
+void timer_demo(void) {
+	// Program initialization
+	led_init();
+
+	while (1) {
+		led_toggle();
+		systick_msec_delay(100);
+	}
+}
+
+void button_led_demo(void) {
 	// Program initialization
 	led_init();
 	button_init();
@@ -48,6 +60,6 @@ int main(void)
 			is_led_on = false;
 		}
 
-		wait(1);
+		systick_msec_delay(1);
 	}
 }
