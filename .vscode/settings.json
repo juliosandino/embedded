@@ -4,6 +4,8 @@
         "stm32f4xx.h": "c",
         "stm32f410rx.h": "c",
         "stm32f411xe.h": "c",
-        "stdint.h": "c"
-    }
+        "stdint.h": "c",
+        "gpio.h": "c"
+    },
+    "cortex-debug.variableUseNaturalFormat": true
 }

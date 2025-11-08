@@ -17,33 +17,37 @@
  */
 
 #include <stdint.h>
-#include "stm32f4xx.h"
+#include "gpio.h"
 
-// 14: Bit mask for enabling GPIOIA (bit 0)
-#define GPIOAEN			(1U << 0)
-// 15: Bit mask for GPIOA pin 5
-#define PIN5			(1U << 5)
-// 16: Alias for PIN5 representing LED pin
-#define LED_PIN			PIN5
+void wait(uint32_t n) {
+	for (int i = 0; i < n ; i++) {
+		;
+	}
+}
 
 int main(void)
 {
-	// Enable the clock access for GPIOA
-	RCC->AHB1ENR |= GPIOAEN;
+	// Program initialization
+	led_init();
+	button_init();
 
-	// Configure pin PA5 as output pin
-	// set bit 10 as 1
-	// set bit 11 as 0
-	GPIOA->MODER |= (1U << 10);
-	GPIOA->MODER &= ~(1U << 11);
+	bool is_led_on = false;
+	bool button_pressed;
 
 	while (1) {
-		// set output high for PA5
-		// Using XOR operator to toggle off and on, and make it blink.
-		GPIOA->ODR ^= LED_PIN;
-		
-		for (int i = 0; i < 2000000 ; i++) {
-			;
+		// Get the button state
+		button_pressed = get_button_state();
+
+		if (button_pressed && !is_led_on) {
+			led_on();
+			is_led_on = true;
 		}
+		
+		if (!button_pressed && is_led_on) {
+			led_off();
+			is_led_on = false;
+		}
+
+		wait(1);
 	}
 }
