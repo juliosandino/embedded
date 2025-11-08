@@ -2,6 +2,7 @@
 
 // LED
 #define GPIOAEN     (1U<<0)
+#define LED_PIN     (1U<<5)
 #define LED_BS5     (1U<<5)     /* Bit Set Pin 5*/
 #define LED_BR5     (1U<<21)    /* Bit Reset Pin 5*/
 
@@ -29,6 +30,11 @@ void led_on(void)
 void led_off(void)
 {
     GPIOA->BSRR |= LED_BR5;
+}
+
+void led_toggle(void)
+{
+    GPIOA->ODR ^= LED_PIN;
 }
 
 // BUTTON INIT
