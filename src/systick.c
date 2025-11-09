@@ -6,12 +6,27 @@
 #define CTRL_COUNTFLAG (1U << 16)
 
 /* By default, the frequency of the mcu is 16 Mhz */
-#define ONE_MSEC_LOAD 16000
+// NOTE: It appears to be actually running a 2 Mhz from experimentation
+#define ONE_MSEC_LOAD 2000
+#define ONE_SEC_LOAD ONE_MSEC_LOAD * 1000
+
+// Helper functions
+void systick_delay_helper(uint32_t load, uint32_t delay);
 
 void systick_msec_delay(uint32_t delay)
 {
+    systick_delay_helper(ONE_MSEC_LOAD, delay);
+}
+
+void systick_sec_delay(uint32_t delay)
+{
+    systick_delay_helper(ONE_SEC_LOAD, delay);
+}
+
+void systick_delay_helper(uint32_t load, uint32_t delay)
+{
     // Load number into the systick load register
-    SysTick->LOAD = ONE_MSEC_LOAD - 1;
+    SysTick->LOAD = load - 1;
 
     // Clear the current value register
     SysTick->VAL = 0;
