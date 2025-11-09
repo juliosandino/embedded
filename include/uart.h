@@ -5,5 +5,5 @@
 #define UART_H
 
 void uart_init();
-
+int puts(const char *s);
 #endif

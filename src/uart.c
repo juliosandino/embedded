@@ -23,7 +23,7 @@ int __io_putchar(int ch)
 void uart_init(void)
 {
     // Enable clock access to GPIOA
-    RCC->AHB1ENR &= GPIOAEN;
+    RCC->AHB1ENR |= GPIOAEN;
 
     // Set the mode of PA2 to alternate function
     // Alternate function is 1 0
@@ -41,7 +41,7 @@ void uart_init(void)
     // Set alternate function
 
     // Enale clock access to USART2
-    RCC->APB1ENR &= UART2EN;
+    RCC->APB1ENR |= UART2EN;
 
     // Configure the UART baud rate
     uart_set_baudrate(APB1_CLK, DBG_UART_BAUDRATE);
@@ -83,6 +83,11 @@ int puts(const char *s)
     while (*s != '\0')
     {
         __io_putchar((uint8_t)*s);
+        // Handle new line reset
+        if (*s == '\n')
+        {
+            __io_putchar('\r');
+        }
         s++;
     }
     return 0;

@@ -21,7 +21,6 @@
 #include "systick.h"
 #include "tim.h"
 #include "uart.h"
-#include <stdio.h>
 
 void systick_demo();
 void button_led_demo();
@@ -39,7 +38,7 @@ void uart_demo()
 	uart_init();
 	while (1)
 	{
-		printf("Hello, world!\n");
+		puts("Hello, world!\n");
 		systick_msec_delay(300);
 	}
 }
