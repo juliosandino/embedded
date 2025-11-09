@@ -2,7 +2,7 @@
 #ifndef TIM_H
 #define TIM_H
 
-#define SR_UIF  (1U<<0)
+#define SR_UIF (1U << 0)
 void tim2_1hz_init(void);
 
 #endif

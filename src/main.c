@@ -19,16 +19,35 @@
 #include <stdint.h>
 #include "gpio.h"
 #include "systick.h"
+#include "tim.h"
 
-void timer_demo();
+void systick_demo();
 void button_led_demo();
+void tim_demo();
 
 int main(void)
 {
-	timer_demo();
+	systick_demo();
 }
 
-void timer_demo(void)
+void tim_demo(void)
+{
+	// Initialization
+	led_init();
+	tim2_1hz_init();
+
+	while (1)
+	{
+		led_toggle();
+		while (!(TIM2->SR & SR_UIF))
+		{
+		}
+
+		TIM2->SR &= ~SR_UIF;
+	}
+}
+
+void systick_demo(void)
 {
 	// Program initialization
 	led_init();
@@ -36,7 +55,7 @@ void timer_demo(void)
 	while (1)
 	{
 		led_toggle();
-		systick_msec_delay(100);
+		systick_msec_delay(300);
 	}
 }
 
