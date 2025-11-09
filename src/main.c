@@ -20,14 +20,28 @@
 #include "gpio.h"
 #include "systick.h"
 #include "tim.h"
+#include "uart.h"
+#include <stdio.h>
 
 void systick_demo();
 void button_led_demo();
 void tim_demo();
+void uart_demo();
 
 int main(void)
 {
-	systick_demo();
+	uart_demo();
+}
+
+void uart_demo()
+{
+	// Initialization
+	uart_init();
+	while (1)
+	{
+		printf("Hello, world!\n");
+		systick_msec_delay(300);
+	}
 }
 
 void tim_demo(void)

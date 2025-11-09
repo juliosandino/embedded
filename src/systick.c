@@ -11,7 +11,7 @@
 #define ONE_SEC_LOAD ONE_MSEC_LOAD * 1000
 
 // Helper functions
-void systick_delay_helper(uint32_t load, uint32_t delay);
+static void systick_delay_helper(uint32_t load, uint32_t delay);
 
 void systick_msec_delay(uint32_t delay)
 {
@@ -23,7 +23,7 @@ void systick_sec_delay(uint32_t delay)
     systick_delay_helper(ONE_SEC_LOAD, delay);
 }
 
-void systick_delay_helper(uint32_t load, uint32_t delay)
+static void systick_delay_helper(uint32_t load, uint32_t delay)
 {
     // Load number into the systick load register
     SysTick->LOAD = load - 1;
