@@ -6,7 +6,7 @@
         "stm32f411xe.h": "c",
         "stdint.h": "c",
         "gpio.h": "c",
-        "time.h": "c"
+        "tim.h": "c"
     },
     "cortex-debug.variableUseNaturalFormat": true
 }

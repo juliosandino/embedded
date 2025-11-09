@@ -11,7 +11,9 @@
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
-            "configFiles": ["board/st_nucleo_f4.cfg"],
+            "configFiles": [
+                "board/st_nucleo_f4.cfg"
+            ],
             "searchDir": [],
             // "runToEntryPoint": "main",
             "showDevDebugOutput": "none",
@@ -19,10 +21,7 @@
                 "enabled": true,
                 "samplesPerSecond": 4
             },
-            "preLaunchCommands": [
-                "make clean",
-                "make all"
-            ],
+            "preLaunchTask": "build",
         }
     ]
 }
