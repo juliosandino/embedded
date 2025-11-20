@@ -6,7 +6,7 @@
     "configurations": [
         {
             "cwd": "${workspaceRoot}",
-            "executable": "${workspaceRoot}/app.elf",
+            "executable": "${workspaceRoot}/build/app.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",
@@ -15,7 +15,7 @@
                 "board/st_nucleo_f4.cfg"
             ],
             "searchDir": [],
-            // "runToEntryPoint": "main",
+            "runToEntryPoint": "main",
             "showDevDebugOutput": "none",
             "liveWatch": {
                 "enabled": true,

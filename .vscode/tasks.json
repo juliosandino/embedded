@@ -6,25 +6,49 @@
         {
             "label": "clean",
             "type": "shell",
-            "command": "make",
-            "args": [
-                "clean"
-            ]
+            "command": "rm -rf ${workspaceFolder}/build"
+        },
+        {
+            "label": "mkdir build",
+            "type": "shell",
+            "command": "mkdir -p ${workspaceFolder}/build",
+        },
+        {
+            "label": "configure",
+            "type": "shell",
+            "command": "cmake .. -DCMAKE_BUILD_TYPE=Debug",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOn": [
+                "clean",
+                "mkdir build"
+            ],
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
         },
         {
             "label": "build",
             "type": "shell",
-            "command": "make",
-            "args": [
-                "all"
-            ],
+            "command": "cmake --build . -j 16",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "dependsOn": [
-                "clean"
+                "configure"
             ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
             "problemMatcher": {
                 "pattern": {
                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
