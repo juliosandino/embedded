@@ -1,28 +1,8 @@
 {
     "configurations": [
         {
-            "name": "Manual",
-            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
-            "defines": [
-                "DEBUG",
-                "NUCLEO_F411RE",
-                "STM32",
-                "STM32F4",
-                "STM32F411RETx",
-                "STM32F411xE"
-            ],
-            "compilerArgs": [
-                "-mcpu=cortex-m4",
-                "-mthumb",
-                "-Wall",
-                "-std=gnu11"
-            ],
-            "includePath": [
-                "chip_headers/CMSIS/Device/ST/STM32F4xx/Include",
-                "chip_headers/CMSIS/Include",
-                "include"
-            ],
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "name": "Linux",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ],
     "version": 4

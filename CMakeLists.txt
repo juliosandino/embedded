@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 project(app C)
 
+# Export compilation database for tools (clang-tidy, clangd, etc.)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Avoid try_compile creating executables (useful for cross-compiling)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
