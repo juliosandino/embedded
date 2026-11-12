@@ -24,6 +24,11 @@
     "command": "rm -rf $ZED_WORKTREE_ROOT/build && cmake -B $ZED_WORKTREE_ROOT/build -DCMAKE_BUILD_TYPE=Debug && cmake --build $ZED_WORKTREE_ROOT/build -j 16"
   },
   {
+    // Generate API documentation into build/docs/html (requires doxygen installed).
+    "label": "docs",
+    "command": "cmake -B $ZED_WORKTREE_ROOT/build -DCMAKE_BUILD_TYPE=Debug && cmake --build $ZED_WORKTREE_ROOT/build --target docs"
+  },
+  {
     "label": "openocd",
     // Starts OpenOCD with the ST Nucleo-F4 board config. Run this before an
     // on-target debug session (OpenOCD exposes a GDB server on port 3333).

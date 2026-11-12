@@ -1,4 +1,10 @@
+/**
+ * @file systick.c
+ * @brief Implementation of SysTick-based blocking delays.
+ */
+
 #include "systick.h"
+#include "stm32f4xx.h"
 
 #define CTRL_ENABLE (1U << 0)
 #define CTRL_DISABLE (0U << 0)
@@ -23,6 +29,11 @@ void systick_sec_delay(uint32_t delay)
     systick_delay_helper(ONE_SEC_LOAD, delay);
 }
 
+/**
+ * @brief Busy-wait for @p delay SysTick periods of @p load ticks each.
+ * @param load Number of timer ticks per period (LOAD is set to load - 1).
+ * @param delay Number of periods to wait.
+ */
 static void systick_delay_helper(uint32_t load, uint32_t delay)
 {
     // Load number into the systick load register

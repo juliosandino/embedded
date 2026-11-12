@@ -1,3 +1,8 @@
+/**
+ * @file stm32f411_startup.c
+ * @brief Minimal startup code: vector table, .data/.bss init, and Reset_Handler.
+ */
+
 #include <stdint.h>
 
 extern uint32_t _estack;
@@ -20,6 +25,9 @@ uint32_t vector_tbl[] __attribute__((section(".isr_vector_tbl"))) = {
     (uint32_t)&HardFault_Handler,
     (uint32_t)&MemManager_Handler};
 
+/**
+ * @brief Trap execution; used as the weak alias for unhandled interrupts.
+ */
 void Default_Handler(void)
 {
     while (1)
@@ -27,6 +35,9 @@ void Default_Handler(void)
     };
 }
 
+/**
+ * @brief Reset entry point: copy .data, zero .bss, then call main().
+ */
 void Reset_Handler(void)
 {
     // Calculate the sizes of the .data and .bss sections

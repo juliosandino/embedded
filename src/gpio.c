@@ -1,3 +1,8 @@
+/**
+ * @file gpio.c
+ * @brief Implementation of the onboard LED and user button helpers.
+ */
+
 #include "gpio.h"
 
 // LED

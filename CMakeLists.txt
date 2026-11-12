@@ -47,3 +47,43 @@ target_link_options(app PRIVATE -nostdlib -T ${LINKER_SCRIPT} -Wl,-Map=${MAP_FIL
 
 # Ensure the C standard is set for the target
 target_compile_options(app PRIVATE -std=gnu11)
+
+# ---------------------------------------------------------------------------
+# Documentation (Doxygen)
+# ---------------------------------------------------------------------------
+# Generates API docs for src/ and include/ into build/docs/html.
+# Requires the host `doxygen` binary; the target is skipped if it is not found.
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+  set(DOXYGEN_PROJECT_NAME "app")
+  set(DOXYGEN_PROJECT_BRIEF "Bare-metal STM32F411 learning project")
+  set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs")
+  set(DOXYGEN_GENERATE_HTML YES)
+  set(DOXYGEN_GENERATE_LATEX NO)
+  set(DOXYGEN_RECURSIVE YES)
+  set(DOXYGEN_EXTRACT_ALL YES)
+  set(DOXYGEN_EXTRACT_STATIC YES)
+  set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
+  set(DOXYGEN_EXCLUDE_PATTERNS
+    "*/chip_headers/*"
+    "*/build/*"
+    "*/python/*"
+  )
+  set(DOXYGEN_PREDEFINED
+    DEBUG
+    NUCLEO_F411RE
+    STM32
+    STM32F4
+    STM32F411RETx
+    STM32F411xE
+  )
+
+  doxygen_add_docs(docs
+    "${CMAKE_SOURCE_DIR}/README.md"
+    "${CMAKE_SOURCE_DIR}/src"
+    "${CMAKE_SOURCE_DIR}/include"
+    COMMENT "Generating API docs with Doxygen"
+  )
+else()
+  message(STATUS "Doxygen not found - the 'docs' target is unavailable")
+endif()

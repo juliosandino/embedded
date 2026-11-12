@@ -1,3 +1,8 @@
+/**
+ * @file tim.c
+ * @brief Implementation of the TIM2 1 Hz timebase.
+ */
+
 #include "tim.h"
 
 #define TIM2EN (1U << 0)

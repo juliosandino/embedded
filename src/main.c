@@ -27,11 +27,17 @@ void button_led_demo();
 void tim_demo();
 void uart_demo();
 
+/**
+ * @brief Application entry point.
+ */
 int main(void)
 {
 	uart_demo();
 }
 
+/**
+ * @brief Initialize USART2 and continuously print "Hello, world!".
+ */
 void uart_demo()
 {
 	// Initialization
@@ -43,6 +49,9 @@ void uart_demo()
 	}
 }
 
+/**
+ * @brief Toggle the LED once per second using the TIM2 update flag.
+ */
 void tim_demo(void)
 {
 	// Initialization
@@ -60,6 +69,9 @@ void tim_demo(void)
 	}
 }
 
+/**
+ * @brief Toggle the LED every 300 ms using SysTick delays.
+ */
 void systick_demo(void)
 {
 	// Program initialization
@@ -72,6 +84,9 @@ void systick_demo(void)
 	}
 }
 
+/**
+ * @brief Switch the LED on and off in response to the user button.
+ */
 void button_led_demo(void)
 {
 	// Program initialization

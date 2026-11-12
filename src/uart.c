@@ -1,3 +1,8 @@
+/**
+ * @file uart.c
+ * @brief USART2 transmit-only driver for debug output (printf retarget).
+ */
+
 #include "uart.h"
 #include "systick.h"
 
@@ -14,6 +19,11 @@
 static void uart_set_baudrate(uint32_t periph_clk, uint32_t baudrate);
 static void uart_write(int ch);
 
+/**
+ * @brief Low-level character writer used by newlib's printf retargeting.
+ * @param ch Character to send.
+ * @return The character passed in.
+ */
 int __io_putchar(int ch)
 {
     uart_write(ch);
@@ -56,6 +66,10 @@ void uart_init(void)
     USART2->SR &= ~(SR_TXE);
 }
 
+/**
+ * @brief Busy-wait for the transmit register to empty, then send one byte.
+ * @param ch Byte to send.
+ */
 static void uart_write(int ch)
 {
     // Make sure transmit data register is empty
@@ -67,11 +81,22 @@ static void uart_write(int ch)
     USART2->DR = (ch & 0xFF);
 }
 
+/**
+ * @brief Compute the USART baud-rate register value.
+ * @param periph_clk Peripheral clock frequency in Hz.
+ * @param baudrate Desired baud rate.
+ * @return Rounded baud-rate divisor.
+ */
 static uint16_t compute_uart_bd(uint32_t periph_clk, uint32_t baudrate)
 {
     return ((periph_clk + (baudrate / 2U)) / baudrate);
 }
 
+/**
+ * @brief Program the USART2 baud-rate register.
+ * @param periph_clk Peripheral clock frequency in Hz.
+ * @param baudrate Desired baud rate.
+ */
 static void uart_set_baudrate(uint32_t periph_clk, uint32_t baudrate)
 {
     USART2->BRR = compute_uart_bd(periph_clk, baudrate);
