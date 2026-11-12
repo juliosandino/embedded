@@ -65,6 +65,16 @@ target_compile_options(app PRIVATE -std=gnu11)
 # Requires the host `doxygen` binary; the target is skipped if it is not found.
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
+  # Doxygen Awesome CSS theme, downloaded at configure time.
+  include(FetchContent)
+  FetchContent_Declare(
+    doxygen-awesome-css
+    URL https://github.com/jothepro/doxygen-awesome-css/archive/refs/tags/v2.5.0.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  )
+  FetchContent_MakeAvailable(doxygen-awesome-css)
+  FetchContent_GetProperties(doxygen-awesome-css SOURCE_DIR AWESOME_CSS_DIR)
+
   set(DOXYGEN_PROJECT_NAME "app")
   set(DOXYGEN_PROJECT_BRIEF "Bare-metal STM32F411 learning project")
   set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs")
@@ -86,6 +96,13 @@ if(DOXYGEN_FOUND)
     STM32F411RETx
     STM32F411xE
   )
+
+  # Doxygen Awesome theme: base layout with the treeview sidebar.
+  set(DOXYGEN_GENERATE_TREEVIEW YES)
+  set(DOXYGEN_DISABLE_INDEX NO)
+  set(DOXYGEN_FULL_SIDEBAR NO)
+  set(DOXYGEN_HTML_COLORSTYLE LIGHT)
+  set(DOXYGEN_HTML_EXTRA_STYLESHEET "${AWESOME_CSS_DIR}/doxygen-awesome.css")
 
   doxygen_add_docs(docs
     "${CMAKE_SOURCE_DIR}/README.md"
