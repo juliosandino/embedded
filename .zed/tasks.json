@@ -1,0 +1,34 @@
+// Zed task definitions, ported from `.vscode/tasks.json`.
+//
+// Zed tasks are flat: there is no `dependsOn` chaining like VS Code, so the
+// "build (full)" task reproduces the original `build -> configure -> clean/mkdir`
+// dependency chain in a single command. `$ZED_WORKTREE_ROOT` replaces
+// `${workspaceFolder}`.
+[
+  {
+    "label": "clean",
+    "command": "rm -rf $ZED_WORKTREE_ROOT/build"
+  },
+  {
+    "label": "configure",
+    // `cmake -B` creates the build directory and configures in one step,
+    // replacing the original separate "mkdir build" + `cmake ..` tasks.
+    "command": "cmake -B $ZED_WORKTREE_ROOT/build -DCMAKE_BUILD_TYPE=Debug"
+  },
+  {
+    "label": "build",
+    "command": "cmake --build $ZED_WORKTREE_ROOT/build -j 16"
+  },
+  {
+    "label": "build (full)",
+    "command": "rm -rf $ZED_WORKTREE_ROOT/build && cmake -B $ZED_WORKTREE_ROOT/build -DCMAKE_BUILD_TYPE=Debug && cmake --build $ZED_WORKTREE_ROOT/build -j 16"
+  },
+  {
+    "label": "openocd",
+    // Starts OpenOCD with the ST Nucleo-F4 board config. Run this before an
+    // on-target debug session (OpenOCD exposes a GDB server on port 3333).
+    "command": "openocd -f board/st_nucleo_f4.cfg",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false
+  }
+]

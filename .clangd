@@ -1,0 +1,5 @@
+# clangd's include-cleaner flags CMSIS's layered headers (stm32f4xx.h pulls in
+# core_cm4.h, which is where SysTick is actually defined) as "not used directly".
+# That's a false positive for STM32 projects, so disable that diagnostic here.
+Diagnostics:
+  UnusedIncludes: None

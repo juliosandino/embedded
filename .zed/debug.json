@@ -1,0 +1,22 @@
+// Debug configurations, ported from `.vscode/launch.json`.
+//
+// NOTE: Zed ships no `cortex-debug` extension. The original configuration used
+// cortex-debug + OpenOCD (`board/st_nucleo_f4.cfg`) to flash/debug an STM32.
+// Zed's built-in C/C++ debug adapter is CodeLLDB (with GDB as a secondary
+// adapter), and there is no one-to-one equivalent for cortex-debug's
+// `servertype`, `liveWatch`, and `runToEntryPoint` features.
+//
+// The configuration below launches the built ELF through CodeLLDB. For
+// on-target STM32 debugging, start the "openocd" task (`.zed/tasks.json`) to
+// expose OpenOCD's GDB server (default port 3333), then attach a GDB/LLDB
+// remote session to it; that wiring is adapter-specific and may need tuning.
+[
+  {
+    "label": "Debug app.elf (CodeLLDB)",
+    "adapter": "CodeLLDB",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/build/app.elf",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "build": "build (full)"
+  }
+]
